@@ -1,0 +1,67 @@
+111
+设计一张表
+能统计一个用户一个月内连续访问一个平台的次数
+user_visit
+用户每次登陆的时候往这个表插入一条记录，
+user_id    visit_time   visit_ip   
+select count(*) from user_visit c
+where c.visit_time>to_date('yyyy-MM-dd','2019-9-1')
+and c.visit_time<to_date('yyyy-MM-dd','2019-9-30') 
+
+
+linux的基本命令
+linux查找一个文件下的所有文件 
+（ls只显示文档名   ll 显示所有文档的详细信息 包括大小 时间 名称  所属组）
+
+文件路径
+a.使用which查找 命令 所在路径
+b.使用whereis 查找该命令或者文件夹所在路径
+
+ 
+关闭进程 
+ps -ef | grep java 
+kill -9  
+
+
+mysql oracle 8种常见的数据类型
+1)字符串类型
+CHAR  固定长度字符串，最大长度2000 bytes ，即1<=n<=2000
+例如CHAR(5)，表示占5个字节的字符串，当长度小于5个字节时，自动补空格，总是包含5个字节的信息，超过则报错，缺省值为1（1个汉字占两个字节）；CHAR(10 char)，表示占10个字符的字符串
+VARCHAR2 可变长度的字符串，最大长度4000 bytes ，即1<=n<=4000
+例如VARCHAR2(10)，表示占10个字节的字符串，当长度小于10字节时，不会自动补空格，占实际大小，大于则报错，缺省值为1
+NCHAR  根据字符集而定的固定长度字符串，最大长度2000 bytes
+NVARCHAR2   根据字符集而定的可变长度字符串，最大长度4000 bytes 
+例如：字符集设置成ZHS16GBK：汉字占2个字节
+字符集设置成AL32UTF8：汉字占3个字节
+NUMBER
+NUMBER(P,S) ：P为整数加小数位数，P取值范围1到38，S取值范围-84到127
+例如NUMBER(5,3)，表示整数位数为2，小数位数为3的数字，形如25.112
+2）日期类型
+DATE
+DATE：日期，从公元前4712年1月1日到公元4712年12月31日的所有合法日期，Oracle 8i其实在内部是按7个字节来保存日期数据，在定义中还包括小时、分、秒。
+
+缺省格式为DD-MON-YY，如07-11月-00 表示2000年11月7日。TIMESTAMP：这是一个七字节或十二字节的定宽日期/时间数据类型。它与DATE不同，因为TIMESTAMP可以包含小数秒和上下午信息，带小数秒的TIMESTAMP在小数点右边最多可以保留九位
+3）LOB类型数据
+BLOB：二进制数据，最大长度4G
+
+CLOB：字符数据，最大长度4G
+
+NCLOB 根据字符集而定的字符数据，最大长度4G
+
+Blob、clob、nclob三种大型对象(LOB)，用来保存较大的图形文件或带格式的文本文件，如Miceosoft Word文档，以及音频、视频等非文本文件，最大长度是4GB
+
+
+
+首先引security的依赖
+然后改web.xml把security框架的过滤器链放进去
+然后写spring-security 
+定义好不需要权限控制的资源、
+拦截规则（拦截路径，hasRole（‘ROLE_USER’））、
+登录表单设置，csrf设置，登出配置
+认证管理器
+改造登录页（默认的form /login  post ） username  password 
+登出页  /logout
+自定义类实现security提供的UserDetailsService接口就会实现一个loadUserByUsername的方法
+把这个方法写完整后
+把这个方法配置到spring-security的配置文件中
+最后在spring-security里面配上spring-security自带的BCrypt加密算法 自动加盐 更安全
